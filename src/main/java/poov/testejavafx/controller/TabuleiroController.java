@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -96,27 +97,69 @@ public class TabuleiroController implements Initializable {
 
             if (App.status == Status.POSICIONAMENTO && cont < 6) {
                 if (jogador == 1) {
+                    Button targetButton = null;
                     if (rbVertical.isSelected()) {
+
                         for (int i = linha; i < linha + App.navios1.get(cont).getTamanho(); i++) {
                             App.navios1.get(cont).getPosicoes().add(App.tabuleiro1.getPosicao(i, coluna));
                             System.out.println(App.navios1.get(cont).getPosicoes().toString());
+
+                            for (Node node : grid.getChildren()) {
+                                if (GridPane.getRowIndex(node) == i && GridPane.getColumnIndex(node) == coluna) {
+                                    if (node instanceof Button) {
+                                        targetButton = (Button) node;
+                                        targetButton.setStyle("-fx-background-color: gray");
+                                        break;
+                                    }
+                                }
+                            }
+                            // button.setStyle("-fx-background-color: green");
                         }
                     } else {
                         for (int i = coluna; i < coluna + App.navios1.get(cont).getTamanho(); i++) {
                             App.navios1.get(cont).getPosicoes().add(App.tabuleiro1.getPosicao(linha, i));
                             System.out.println(App.navios1.get(cont).getPosicoes().toString());
+
+                            for (Node node : grid.getChildren()) {
+                                if (GridPane.getRowIndex(node) == linha && GridPane.getColumnIndex(node) == i) {
+                                    if (node instanceof Button) {
+                                        targetButton = (Button) node;
+                                        targetButton.setStyle("-fx-background-color: gray");
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                 } else {
+                    Button targetButton = null;
                     if (rbVertical.isSelected()) {
                         for (int i = linha; i < linha + App.navios2.get(cont).getTamanho(); i++) {
                             App.navios2.get(cont).getPosicoes().add(App.tabuleiro2.getPosicao(i, coluna));
                             System.out.println(App.navios2.get(cont).getPosicoes().toString());
+                            for (Node node : grid.getChildren()) {
+                                if (GridPane.getRowIndex(node) == i && GridPane.getColumnIndex(node) == coluna) {
+                                    if (node instanceof Button) {
+                                        targetButton = (Button) node;
+                                        targetButton.setStyle("-fx-background-color: #006400");
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     } else {
                         for (int i = coluna; i < coluna + App.navios2.get(cont).getTamanho(); i++) {
                             App.navios2.get(cont).getPosicoes().add(App.tabuleiro2.getPosicao(linha, i));
                             System.out.println(App.navios2.get(cont).getPosicoes().toString());
+                            for (Node node : grid.getChildren()) {
+                                if (GridPane.getRowIndex(node) == linha && GridPane.getColumnIndex(node) == i) {
+                                    if (node instanceof Button) {
+                                        targetButton = (Button) node;
+                                        targetButton.setStyle("-fx-background-color: #006400");
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                 }

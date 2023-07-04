@@ -27,16 +27,13 @@ public class App extends Application {
         status = Status.INICIALIZACAO;
 
         // Criando a scene, colocando o tabuleiro feito visualmente e apresentando isso.
-        scene = new Scene(loadFXML("tabuleiro"));
+        scene = new Scene(loadFXML("tabuleiro1"));
         stage.setScene(scene);
         stage.show();
 
         inicializacao();
 
         status = Status.POSICIONAMENTO;
-
-        
-
 
     }
 
