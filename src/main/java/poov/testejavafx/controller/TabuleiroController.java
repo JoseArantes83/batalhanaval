@@ -48,7 +48,7 @@ public class TabuleiroController implements Initializable {
     public static int aux;
     public static Scene scene2;
 
-    public TabuleiroController(){
+    public TabuleiroController() {
         System.out.println("Construtor executado.");
     }
 
@@ -346,10 +346,10 @@ public class TabuleiroController implements Initializable {
                         Stage stage = (Stage) botaoClicado.getScene().getWindow();
                         stage.setScene(scene2);
 
-                        //if (cont == 0) {
-                            tfJogador.clear();
-                            tfJogador.setText("1");
-                        //}
+                        // if (cont == 0) {
+                        tfJogador.clear();
+                        tfJogador.setText("1");
+                        // }
 
                         if (App.tabuleiro2.getPosicao(linha, coluna).isAtirado()) {
                             Alert alert = new Alert(AlertType.WARNING);
@@ -359,7 +359,7 @@ public class TabuleiroController implements Initializable {
                             alert.setContentText("Por favor, tente novamente.");
                             alert.showAndWait();
                             cont--;
-                        } else if(!App.tabuleiro2.getPosicao(linha, coluna).isAtirado()){
+                        } else if (!App.tabuleiro2.getPosicao(linha, coluna).isAtirado()) {
                             App.tabuleiro2.getPosicao(linha, coluna).setAtirado(true);
 
                             if (App.tabuleiro2.getPosicao(linha, coluna).isTemNavio()) { // Acertou
@@ -401,10 +401,10 @@ public class TabuleiroController implements Initializable {
                         Stage stage = (Stage) botaoClicado.getScene().getWindow();
                         stage.setScene(App.scene);
 
-                        //if (cont == 1) {
-                            tfJogador.clear();
-                            tfJogador.setText("2");
-                        //}
+                        // if (cont == 1) {
+                        tfJogador.clear();
+                        tfJogador.setText("2");
+                        // }
 
                         if (App.tabuleiro1.getPosicao(linha, coluna).isAtirado()) {
                             Alert alert = new Alert(AlertType.WARNING);
@@ -413,7 +413,7 @@ public class TabuleiroController implements Initializable {
                             alert.setHeaderText("Posição Inválida!");
                             alert.setContentText("Por favor, tente novamente.");
                             alert.showAndWait();
-                        } else if(!App.tabuleiro1.getPosicao(linha, coluna).isAtirado()){
+                        } else if (!App.tabuleiro1.getPosicao(linha, coluna).isAtirado()) {
                             App.tabuleiro1.getPosicao(linha, coluna).setAtirado(true);
 
                             if (App.tabuleiro1.getPosicao(linha, coluna).isTemNavio()) { // Acertou
