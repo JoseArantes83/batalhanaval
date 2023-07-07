@@ -14,26 +14,60 @@ import poov.testejavafx.model.Tabuleiro;
 
 public class App extends Application {
 
-    private static Scene scene;
+    public static Scene scene;
 
     public static Tabuleiro tabuleiro1;
     public static Tabuleiro tabuleiro2;
     public static ArrayList<Navio> navios1;
     public static ArrayList<Navio> navios2;
     public static Status status;
+    public static int momento;
+    public static int vezJogador;
+    public static boolean posicionando;
+    public static boolean posicionamento1;
+    public static boolean posicionamento2;
 
     @Override
     public void start(Stage stage) throws IOException {
-        status = Status.INICIALIZACAO;
+        // status = Status.INICIALIZACAO;
+        inicializacao();
 
-        // Criando a scene, colocando o tabuleiro feito visualmente e apresentando isso.
+        // posicionando = false;
+        status = Status.POSICIONAMENTO;
+        vezJogador = 1;
         scene = new Scene(loadFXML("tabuleiro1"));
         stage.setScene(scene);
         stage.show();
+        /*
+         * 
+         * scene2 = new Scene(loadFXML("tabuleiro2"));
+         * 
+         * //setar botões do tabuleiro 1
+         * /*
+         * while (posicionando == true) {
+         * 
+         * while (vezJogador == 1) {
+         * // posicionamento jogador 1
+         * // Mostrando o tabuleiro 1
+         * 
+         * // verificação se a vez do 2 já acabou é feita no handle
+         * if (vezJogador == 2) {
+         * scene2 = new Scene(loadFXML("tabuleiro2"));
+         * stage.setScene(scene2);
+         * stage.show();
+         * 
+         * //setar botões do tabuleiro 2
+         * }
+         * }
+         * 
+         * while (vezJogador == 2) {
+         * 
+         * }
+         * }
+         */
 
-        inicializacao();
-
-        status = Status.POSICIONAMENTO;
+        // Aqui é um sequencial que posso usar como orientação do jogo
+        // ou tenho que fazer tudo orientado a eventos no handle?
 
     }
 
@@ -41,7 +75,7 @@ public class App extends Application {
         scene.setRoot(loadFXML(fxml));
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }

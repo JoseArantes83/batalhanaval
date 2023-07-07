@@ -5,6 +5,11 @@ public class Posicao {
     private int linha;
     private int coluna;
     private boolean atirado = false;
+    private boolean temNavio = false;
+    private Navio navio = null;
+
+    
+    // talvez criar variável acertou.
 
     public Posicao(int linha, int coluna) {
         this.linha = linha;
@@ -38,6 +43,22 @@ public class Posicao {
     @Override
     public String toString() {
         return "Posicao [linha=" + linha + ", coluna=" + coluna + "]";
+    }
+
+    public boolean isTemNavio() {
+        return temNavio;
+    }
+
+    public void setTemNavio(boolean temNavio) {
+        this.temNavio = temNavio;
+    }
+
+    public Navio getNavio() {
+        return navio;
+    }
+
+    public void setNavio(Navio navio) {
+        this.navio = navio;
     }
 
 }

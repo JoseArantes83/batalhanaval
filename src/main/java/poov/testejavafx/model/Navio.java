@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Navio {
 
     private int tamanho;
-    private int status; // 0 afundado 1 ativo
+    private boolean afundado = false; 
     private ArrayList<Posicao> posicoes = new ArrayList<>();
 
     public Navio(int tamanho) {
         this.tamanho = tamanho;
-        status = 1;
+        afundado = false;
     }
 
     public int getTamanho() {
@@ -21,12 +21,12 @@ public class Navio {
         this.tamanho = tamanho;
     }
 
-    public int getStatus() {
-        return status;
+    public boolean isAfundado() {
+        return afundado;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setAfundado(boolean afundado) {
+        this.afundado = afundado;
     }
 
     public ArrayList<Posicao> getPosicoes() {
@@ -36,5 +36,4 @@ public class Navio {
     public void setPosicoes(ArrayList<Posicao> posicoes) {
         this.posicoes = posicoes;
     }
-
 }
