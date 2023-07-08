@@ -26,6 +26,7 @@ public class App extends Application {
     public static boolean posicionando;
     public static boolean posicionamento1;
     public static boolean posicionamento2;
+    public static int cont = 0;
 
     @Override
     public void start(Stage stage) throws IOException {

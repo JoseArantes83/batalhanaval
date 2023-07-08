@@ -42,7 +42,6 @@ public class TabuleiroController implements Initializable {
     @FXML
     private ToggleGroup tgDisposicao;
 
-    public static int cont = 0;
     public static int linIni;
     public static int colIni;
     public static int aux;
@@ -107,22 +106,22 @@ public class TabuleiroController implements Initializable {
             int linha = GridPane.getRowIndex(botaoClicado);
             int coluna = GridPane.getColumnIndex(botaoClicado);
 
-            if (App.status == Status.POSICIONAMENTO && cont < 6) {
+            if (App.status == Status.POSICIONAMENTO && App.cont < 6) {
                 if (App.vezJogador == 1) {
                     Button targetButton = null;
                     Boolean coincide = false;
                     if (rbVertical.isSelected()) {
 
-                        if ((linha + App.navios1.get(cont).getTamanho()) > 10) {
+                        if ((linha + App.navios1.get(App.cont).getTamanho()) > 10) {
                             Alert alert = new Alert(AlertType.WARNING);
                             alert.initModality(Modality.WINDOW_MODAL);
                             alert.setTitle("INVÁLIDO");
                             alert.setHeaderText("Posição Inválida!");
                             alert.setContentText("Por favor, tente novamente.");
                             alert.showAndWait();
-                            cont--;
+                            App.cont--;
                         } else {
-                            for (int i = linha; i < linha + App.navios1.get(cont).getTamanho(); i++) {
+                            for (int i = linha; i < linha + App.navios1.get(App.cont).getTamanho(); i++) {
                                 if (App.tabuleiro1.getPosicao(i, coluna).getNavio() != null) {
                                     coincide = true;
                                 }
@@ -135,13 +134,13 @@ public class TabuleiroController implements Initializable {
                                 alert.setHeaderText("Posição Inválida!");
                                 alert.setContentText("Por favor, tente novamente.");
                                 alert.showAndWait();
-                                cont--;
+                                App.cont--;
                             } else {
-                                for (int i = linha; i < linha + App.navios1.get(cont).getTamanho(); i++) {
+                                for (int i = linha; i < linha + App.navios1.get(App.cont).getTamanho(); i++) {
                                     App.tabuleiro1.getPosicao(i, coluna).setTemNavio(true);
-                                    App.tabuleiro1.getPosicao(i, coluna).setNavio(App.navios1.get(cont));
-                                    App.navios1.get(cont).getPosicoes().add(App.tabuleiro1.getPosicao(i, coluna));
-                                    System.out.println(App.navios1.get(cont).getPosicoes().toString());
+                                    App.tabuleiro1.getPosicao(i, coluna).setNavio(App.navios1.get(App.cont));
+                                    App.navios1.get(App.cont).getPosicoes().add(App.tabuleiro1.getPosicao(i, coluna));
+                                    System.out.println(App.navios1.get(App.cont).getPosicoes().toString());
 
                                     for (Node node : grid.getChildren()) {
                                         if (GridPane.getRowIndex(node) == i
@@ -164,16 +163,16 @@ public class TabuleiroController implements Initializable {
                         // Se elas não passam encima de outro navio já posicionado.
 
                     } else {
-                        if ((coluna + App.navios1.get(cont).getTamanho()) > 10) {
+                        if ((coluna + App.navios1.get(App.cont).getTamanho()) > 10) {
                             Alert alert = new Alert(AlertType.WARNING);
                             alert.initModality(Modality.WINDOW_MODAL);
                             alert.setTitle("INVÁLIDO");
                             alert.setHeaderText("Posição Inválida!");
                             alert.setContentText("Por favor, tente novamente.");
                             alert.showAndWait();
-                            cont--;
+                            App.cont--;
                         } else {
-                            for (int i = coluna; i < coluna + App.navios1.get(cont).getTamanho(); i++) {
+                            for (int i = coluna; i < coluna + App.navios1.get(App.cont).getTamanho(); i++) {
                                 if (App.tabuleiro1.getPosicao(linha, i).getNavio() != null) {
                                     coincide = true;
                                 }
@@ -186,13 +185,13 @@ public class TabuleiroController implements Initializable {
                                 alert.setHeaderText("Posição Inválida!");
                                 alert.setContentText("Por favor, tente novamente.");
                                 alert.showAndWait();
-                                cont--;
+                                App.cont--;
                             } else {
-                                for (int i = coluna; i < coluna + App.navios1.get(cont).getTamanho(); i++) {
+                                for (int i = coluna; i < coluna + App.navios1.get(App.cont).getTamanho(); i++) {
                                     App.tabuleiro1.getPosicao(linha, i).setTemNavio(true);
-                                    App.tabuleiro1.getPosicao(linha, i).setNavio(App.navios1.get(cont));
-                                    App.navios1.get(cont).getPosicoes().add(App.tabuleiro1.getPosicao(linha, i));
-                                    System.out.println(App.navios1.get(cont).getPosicoes().toString());
+                                    App.tabuleiro1.getPosicao(linha, i).setNavio(App.navios1.get(App.cont));
+                                    App.navios1.get(App.cont).getPosicoes().add(App.tabuleiro1.getPosicao(linha, i));
+                                    System.out.println(App.navios1.get(App.cont).getPosicoes().toString());
 
                                     for (Node node : grid.getChildren()) {
                                         if (GridPane.getRowIndex(node) == linha && GridPane.getColumnIndex(node) == i) {
@@ -209,7 +208,7 @@ public class TabuleiroController implements Initializable {
                         }
                     }
                 } else if (App.vezJogador == 2) {
-                    if (cont == -1) {
+                    if (App.cont == -1) {
                         try {
                             scene2 = new Scene(App.loadFXML("tabuleiro2"));
                             Stage stage = (Stage) botaoClicado.getScene().getWindow();
@@ -223,16 +222,16 @@ public class TabuleiroController implements Initializable {
                         Boolean coincide = false;
                         if (rbVertical.isSelected()) {
 
-                            if ((linha + App.navios2.get(cont).getTamanho()) > 10) {
+                            if ((linha + App.navios2.get(App.cont).getTamanho()) > 10) {
                                 Alert alert = new Alert(AlertType.WARNING);
                                 alert.initModality(Modality.WINDOW_MODAL);
                                 alert.setTitle("INVÁLIDO");
                                 alert.setHeaderText("Posição Inválida!");
                                 alert.setContentText("Por favor, tente novamente.");
                                 alert.showAndWait();
-                                cont--;
+                                App.cont--;
                             } else {
-                                for (int i = linha; i < linha + App.navios2.get(cont).getTamanho(); i++) {
+                                for (int i = linha; i < linha + App.navios2.get(App.cont).getTamanho(); i++) {
                                     if (App.tabuleiro2.getPosicao(i, coluna).getNavio() != null) {
                                         coincide = true;
                                     }
@@ -245,13 +244,14 @@ public class TabuleiroController implements Initializable {
                                     alert.setHeaderText("Posição Inválida!");
                                     alert.setContentText("Por favor, tente novamente.");
                                     alert.showAndWait();
-                                    cont--;
+                                    App.cont--;
                                 } else {
-                                    for (int i = linha; i < linha + App.navios2.get(cont).getTamanho(); i++) {
+                                    for (int i = linha; i < linha + App.navios2.get(App.cont).getTamanho(); i++) {
                                         App.tabuleiro2.getPosicao(i, coluna).setTemNavio(true);
-                                        App.tabuleiro2.getPosicao(i, coluna).setNavio(App.navios2.get(cont));
-                                        App.navios2.get(cont).getPosicoes().add(App.tabuleiro2.getPosicao(i, coluna));
-                                        System.out.println(App.navios2.get(cont).getPosicoes().toString());
+                                        App.tabuleiro2.getPosicao(i, coluna).setNavio(App.navios2.get(App.cont));
+                                        App.navios2.get(App.cont).getPosicoes()
+                                                .add(App.tabuleiro2.getPosicao(i, coluna));
+                                        System.out.println(App.navios2.get(App.cont).getPosicoes().toString());
                                         for (Node node : grid.getChildren()) {
                                             if (GridPane.getRowIndex(node) == i
                                                     && GridPane.getColumnIndex(node) == coluna) {
@@ -269,16 +269,16 @@ public class TabuleiroController implements Initializable {
 
                         } else {
 
-                            if ((coluna + App.navios2.get(cont).getTamanho()) > 10) {
+                            if ((coluna + App.navios2.get(App.cont).getTamanho()) > 10) {
                                 Alert alert = new Alert(AlertType.WARNING);
                                 alert.initModality(Modality.WINDOW_MODAL);
                                 alert.setTitle("INVÁLIDO");
                                 alert.setHeaderText("Posição Inválida!");
                                 alert.setContentText("Por favor, tente novamente.");
                                 alert.showAndWait();
-                                cont--;
+                                App.cont--;
                             } else {
-                                for (int i = coluna; i < coluna + App.navios2.get(cont).getTamanho(); i++) {
+                                for (int i = coluna; i < coluna + App.navios2.get(App.cont).getTamanho(); i++) {
                                     if (App.tabuleiro2.getPosicao(linha, i).getNavio() != null) {
                                         coincide = true;
                                     }
@@ -291,13 +291,14 @@ public class TabuleiroController implements Initializable {
                                     alert.setHeaderText("Posição Inválida!");
                                     alert.setContentText("Por favor, tente novamente.");
                                     alert.showAndWait();
-                                    cont--;
+                                    App.cont--;
                                 } else {
-                                    for (int i = coluna; i < coluna + App.navios2.get(cont).getTamanho(); i++) {
+                                    for (int i = coluna; i < coluna + App.navios2.get(App.cont).getTamanho(); i++) {
                                         App.tabuleiro2.getPosicao(linha, i).setTemNavio(true);
-                                        App.tabuleiro2.getPosicao(linha, i).setNavio(App.navios2.get(cont));
-                                        App.navios2.get(cont).getPosicoes().add(App.tabuleiro2.getPosicao(linha, i));
-                                        System.out.println(App.navios2.get(cont).getPosicoes().toString());
+                                        App.tabuleiro2.getPosicao(linha, i).setNavio(App.navios2.get(App.cont));
+                                        App.navios2.get(App.cont).getPosicoes()
+                                                .add(App.tabuleiro2.getPosicao(linha, i));
+                                        System.out.println(App.navios2.get(App.cont).getPosicoes().toString());
                                         for (Node node : grid.getChildren()) {
                                             if (GridPane.getRowIndex(node) == linha
                                                     && GridPane.getColumnIndex(node) == i) {
@@ -317,49 +318,53 @@ public class TabuleiroController implements Initializable {
                     }
                 }
 
-                cont++;
+                App.cont++;
 
-                if (cont == 6 && App.vezJogador == 1) {
-                    cont = -1;
+                if (App.cont == 6 && App.vezJogador == 1) {
+                    App.cont = -1;
                     App.vezJogador = 2;
                     // tfJogador.clear();
                     // tfJogador.appendText("2");
-                } else if (cont == 6 && App.vezJogador == 2) {
+                } else if (App.cont == 6 && App.vezJogador == 2) {
                     App.status = Status.ACAO;
                     App.vezJogador = 1;
-                    cont = -1;
+                    App.cont = -1;
                 }
 
             } else if (App.status == Status.ACAO) {
                 Boolean afundou;
                 Boolean ganhou;
+                Stage stage;
 
-                if (cont == -1) {
+                if (App.cont == -1) {
                     try { // limpando tabuleiros
                         App.scene = new Scene(App.loadFXML("tabuleiro1"));
                         scene2 = new Scene(App.loadFXML("tabuleiro2"));
+                        stage = (Stage) botaoClicado.getScene().getWindow();
+                        stage.setScene(scene2);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
                     if (App.vezJogador == 1) {
-                        Stage stage = (Stage) botaoClicado.getScene().getWindow();
-                        stage.setScene(scene2);
 
-                        // if (cont == 0) {
+                        // Isso está mudando o tabuleiro atual e não a scene que só é setada após a
+                        // função acabar.
+                        // Como aqui nesse momento o tabuleiro 2 está setado, estou modificando a sua
+                        // label.
                         tfJogador.clear();
-                        tfJogador.setText("1");
-                        // }
+                        tfJogador.setText("t2j1");
 
-                        if (App.tabuleiro2.getPosicao(linha, coluna).isAtirado()) {
+                        if (App.tabuleiro2.getPosicao(linha, coluna).isAtirado() /* && App.cont != 0 */) {
                             Alert alert = new Alert(AlertType.WARNING);
                             alert.initModality(Modality.WINDOW_MODAL);
                             alert.setTitle("INVÁLIDO");
                             alert.setHeaderText("Posição Inválida!");
                             alert.setContentText("Por favor, tente novamente.");
                             alert.showAndWait();
-                            cont--;
-                        } else if (!App.tabuleiro2.getPosicao(linha, coluna).isAtirado()) {
+                            App.cont--;
+                        } else if (!App.tabuleiro2.getPosicao(linha, coluna).isAtirado() /* && App.cont != 0 */) {
                             App.tabuleiro2.getPosicao(linha, coluna).setAtirado(true);
 
                             if (App.tabuleiro2.getPosicao(linha, coluna).isTemNavio()) { // Acertou
@@ -394,17 +399,21 @@ public class TabuleiroController implements Initializable {
 
                             }
 
+                            stage = (Stage) botaoClicado.getScene().getWindow();
+
+                            if (stage.getScene() != App.scene) {
+                                stage.setScene(App.scene);
+                            }
+
                             App.vezJogador = 2;
                         }
 
                     } else if (App.vezJogador == 2) {
-                        Stage stage = (Stage) botaoClicado.getScene().getWindow();
-                        stage.setScene(App.scene);
 
-                        // if (cont == 1) {
+                        // Como aqui nesse momento o tabuleiro 1 está setado, estou modificando a sua
+                        // label.
                         tfJogador.clear();
-                        tfJogador.setText("2");
-                        // }
+                        tfJogador.setText("t1j2");
 
                         if (App.tabuleiro1.getPosicao(linha, coluna).isAtirado()) {
                             Alert alert = new Alert(AlertType.WARNING);
@@ -445,13 +454,20 @@ public class TabuleiroController implements Initializable {
                             } else {
                                 botaoClicado.setText("A");
                             }
+
+                            stage = (Stage) botaoClicado.getScene().getWindow();
+
+                            if (stage.getScene() != scene2) {
+                                stage.setScene(scene2);
+                            }
+
                             App.vezJogador = 1;
                         }
 
                     }
                 }
 
-                cont++;
+                App.cont++;
             }
         }
 
