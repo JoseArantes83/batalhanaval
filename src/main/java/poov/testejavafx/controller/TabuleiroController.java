@@ -47,10 +47,6 @@ public class TabuleiroController implements Initializable {
     public static int aux;
     public static Scene scene2;
 
-    public TabuleiroController() {
-        System.out.println("Construtor executado.");
-    }
-
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -75,28 +71,9 @@ public class TabuleiroController implements Initializable {
                 grid.setAlignment(Pos.CENTER);
             }
         }
-
-        // System.out.println("initialize 1 rodando");
-
-        // tfJogador.appendText("1");
-
-        // Primeiro: colocar porta-aviões (5 posições)
-        // Escolha a posição inicial do porta avião:
-        // App.posicionando = true;
     }
 
-    /*
-     * public void posicionarBarco(Tabuleiro tabuleiro, ArrayList<Posicao> posicoes,
-     * int numBarco, int linha, int coluna) {
-     * Posicao posicao = null;
-     * 
-     * switch (numBarco) {
-     * case 1: // Primeiro porta-aviões
-     */
-
     public class ButtonClickHandler implements EventHandler<ActionEvent> {
-
-        /// ArrayList<Posicao> posClicadas = new ArrayList<>();
 
         @Override
         public void handle(ActionEvent event) {
@@ -110,15 +87,10 @@ public class TabuleiroController implements Initializable {
                 if (App.vezJogador == 1) {
                     Button targetButton = null;
                     Boolean coincide = false;
-                    if (rbVertical.isSelected()) {
 
+                    if (rbVertical.isSelected()) {
                         if ((linha + App.navios1.get(App.cont).getTamanho()) > 10) {
-                            Alert alert = new Alert(AlertType.WARNING);
-                            alert.initModality(Modality.WINDOW_MODAL);
-                            alert.setTitle("INVÁLIDO");
-                            alert.setHeaderText("Posição Inválida!");
-                            alert.setContentText("Por favor, tente novamente.");
-                            alert.showAndWait();
+                            mensagemPosicaoInvalida();
                             App.cont--;
                         } else {
                             for (int i = linha; i < linha + App.navios1.get(App.cont).getTamanho(); i++) {
@@ -128,48 +100,37 @@ public class TabuleiroController implements Initializable {
                             }
 
                             if (coincide) {
-                                Alert alert = new Alert(AlertType.WARNING);
-                                alert.initModality(Modality.WINDOW_MODAL);
-                                alert.setTitle("INVÁLIDO");
-                                alert.setHeaderText("Posição Inválida!");
-                                alert.setContentText("Por favor, tente novamente.");
-                                alert.showAndWait();
+                                mensagemPosicaoInvalida();
                                 App.cont--;
                             } else {
                                 for (int i = linha; i < linha + App.navios1.get(App.cont).getTamanho(); i++) {
                                     App.tabuleiro1.getPosicao(i, coluna).setTemNavio(true);
                                     App.tabuleiro1.getPosicao(i, coluna).setNavio(App.navios1.get(App.cont));
                                     App.navios1.get(App.cont).getPosicoes().add(App.tabuleiro1.getPosicao(i, coluna));
-                                    System.out.println(App.navios1.get(App.cont).getPosicoes().toString());
 
                                     for (Node node : grid.getChildren()) {
                                         if (GridPane.getRowIndex(node) == i
                                                 && GridPane.getColumnIndex(node) == coluna) {
                                             if (node instanceof Button) {
                                                 targetButton = (Button) node;
-                                                targetButton.setStyle("-fx-background-color: gray");
+                                                if (App.navios2.get(App.cont).getTamanho() == 5) {
+                                                    targetButton.setText("P");
+                                                } else if (App.navios2.get(App.cont).getTamanho() == 4) {
+                                                    targetButton.setText("C");
+                                                } else {
+                                                    targetButton.setText("S");
+                                                }
                                                 break;
                                             }
                                         }
                                     }
-                                    // button.setStyle("-fx-background-color: green");
                                 }
                             }
 
                         }
-
-                        // Verificar se as posições do navio são válidas.
-                        // Se elas estão dentro do tabuleiro
-                        // Se elas não passam encima de outro navio já posicionado.
-
                     } else {
                         if ((coluna + App.navios1.get(App.cont).getTamanho()) > 10) {
-                            Alert alert = new Alert(AlertType.WARNING);
-                            alert.initModality(Modality.WINDOW_MODAL);
-                            alert.setTitle("INVÁLIDO");
-                            alert.setHeaderText("Posição Inválida!");
-                            alert.setContentText("Por favor, tente novamente.");
-                            alert.showAndWait();
+                            mensagemPosicaoInvalida();
                             App.cont--;
                         } else {
                             for (int i = coluna; i < coluna + App.navios1.get(App.cont).getTamanho(); i++) {
@@ -179,32 +140,31 @@ public class TabuleiroController implements Initializable {
                             }
 
                             if (coincide) {
-                                Alert alert = new Alert(AlertType.WARNING);
-                                alert.initModality(Modality.WINDOW_MODAL);
-                                alert.setTitle("INVÁLIDO");
-                                alert.setHeaderText("Posição Inválida!");
-                                alert.setContentText("Por favor, tente novamente.");
-                                alert.showAndWait();
+                                mensagemPosicaoInvalida();
                                 App.cont--;
                             } else {
                                 for (int i = coluna; i < coluna + App.navios1.get(App.cont).getTamanho(); i++) {
                                     App.tabuleiro1.getPosicao(linha, i).setTemNavio(true);
                                     App.tabuleiro1.getPosicao(linha, i).setNavio(App.navios1.get(App.cont));
                                     App.navios1.get(App.cont).getPosicoes().add(App.tabuleiro1.getPosicao(linha, i));
-                                    System.out.println(App.navios1.get(App.cont).getPosicoes().toString());
 
                                     for (Node node : grid.getChildren()) {
                                         if (GridPane.getRowIndex(node) == linha && GridPane.getColumnIndex(node) == i) {
                                             if (node instanceof Button) {
                                                 targetButton = (Button) node;
-                                                targetButton.setStyle("-fx-background-color: gray");
+                                                if (App.navios2.get(App.cont).getTamanho() == 5) {
+                                                    targetButton.setText("P");
+                                                } else if (App.navios2.get(App.cont).getTamanho() == 4) {
+                                                    targetButton.setText("C");
+                                                } else {
+                                                    targetButton.setText("S");
+                                                }
                                                 break;
                                             }
                                         }
                                     }
                                 }
                             }
-
                         }
                     }
                 } else if (App.vezJogador == 2) {
@@ -216,19 +176,13 @@ public class TabuleiroController implements Initializable {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     } else {
                         Button targetButton = null;
                         Boolean coincide = false;
-                        if (rbVertical.isSelected()) {
 
+                        if (rbVertical.isSelected()) {
                             if ((linha + App.navios2.get(App.cont).getTamanho()) > 10) {
-                                Alert alert = new Alert(AlertType.WARNING);
-                                alert.initModality(Modality.WINDOW_MODAL);
-                                alert.setTitle("INVÁLIDO");
-                                alert.setHeaderText("Posição Inválida!");
-                                alert.setContentText("Por favor, tente novamente.");
-                                alert.showAndWait();
+                                mensagemPosicaoInvalida();
                                 App.cont--;
                             } else {
                                 for (int i = linha; i < linha + App.navios2.get(App.cont).getTamanho(); i++) {
@@ -238,12 +192,7 @@ public class TabuleiroController implements Initializable {
                                 }
 
                                 if (coincide) {
-                                    Alert alert = new Alert(AlertType.WARNING);
-                                    alert.initModality(Modality.WINDOW_MODAL);
-                                    alert.setTitle("INVÁLIDO");
-                                    alert.setHeaderText("Posição Inválida!");
-                                    alert.setContentText("Por favor, tente novamente.");
-                                    alert.showAndWait();
+                                    mensagemPosicaoInvalida();
                                     App.cont--;
                                 } else {
                                     for (int i = linha; i < linha + App.navios2.get(App.cont).getTamanho(); i++) {
@@ -251,31 +200,29 @@ public class TabuleiroController implements Initializable {
                                         App.tabuleiro2.getPosicao(i, coluna).setNavio(App.navios2.get(App.cont));
                                         App.navios2.get(App.cont).getPosicoes()
                                                 .add(App.tabuleiro2.getPosicao(i, coluna));
-                                        System.out.println(App.navios2.get(App.cont).getPosicoes().toString());
+
                                         for (Node node : grid.getChildren()) {
                                             if (GridPane.getRowIndex(node) == i
                                                     && GridPane.getColumnIndex(node) == coluna) {
                                                 if (node instanceof Button) {
                                                     targetButton = (Button) node;
-                                                    targetButton.setStyle("-fx-background-color: #006400");
+                                                    if (App.navios2.get(App.cont).getTamanho() == 5) {
+                                                        targetButton.setText("P");
+                                                    } else if (App.navios2.get(App.cont).getTamanho() == 4) {
+                                                        targetButton.setText("C");
+                                                    } else {
+                                                        targetButton.setText("S");
+                                                    }
                                                     break;
                                                 }
                                             }
                                         }
                                     }
                                 }
-
                             }
-
-                        } else {
-
+                        } else { // Está na horizontal
                             if ((coluna + App.navios2.get(App.cont).getTamanho()) > 10) {
-                                Alert alert = new Alert(AlertType.WARNING);
-                                alert.initModality(Modality.WINDOW_MODAL);
-                                alert.setTitle("INVÁLIDO");
-                                alert.setHeaderText("Posição Inválida!");
-                                alert.setContentText("Por favor, tente novamente.");
-                                alert.showAndWait();
+                                mensagemPosicaoInvalida();
                                 App.cont--;
                             } else {
                                 for (int i = coluna; i < coluna + App.navios2.get(App.cont).getTamanho(); i++) {
@@ -285,12 +232,7 @@ public class TabuleiroController implements Initializable {
                                 }
 
                                 if (coincide) {
-                                    Alert alert = new Alert(AlertType.WARNING);
-                                    alert.initModality(Modality.WINDOW_MODAL);
-                                    alert.setTitle("INVÁLIDO");
-                                    alert.setHeaderText("Posição Inválida!");
-                                    alert.setContentText("Por favor, tente novamente.");
-                                    alert.showAndWait();
+                                    mensagemPosicaoInvalida();
                                     App.cont--;
                                 } else {
                                     for (int i = coluna; i < coluna + App.navios2.get(App.cont).getTamanho(); i++) {
@@ -298,22 +240,27 @@ public class TabuleiroController implements Initializable {
                                         App.tabuleiro2.getPosicao(linha, i).setNavio(App.navios2.get(App.cont));
                                         App.navios2.get(App.cont).getPosicoes()
                                                 .add(App.tabuleiro2.getPosicao(linha, i));
-                                        System.out.println(App.navios2.get(App.cont).getPosicoes().toString());
+
                                         for (Node node : grid.getChildren()) {
                                             if (GridPane.getRowIndex(node) == linha
                                                     && GridPane.getColumnIndex(node) == i) {
                                                 if (node instanceof Button) {
                                                     targetButton = (Button) node;
-                                                    targetButton.setStyle("-fx-background-color: #006400");
+                                                    if (App.navios2.get(App.cont).getTamanho() == 5) {
+                                                        targetButton.setText("P");
+                                                    } else if (App.navios2.get(App.cont).getTamanho() == 4) {
+                                                        targetButton.setText("C");
+                                                    } else {
+                                                        targetButton.setText("S");
+                                                    }
+                                                    // targetButton.setStyle("-fx-background-color: #006400");
                                                     break;
                                                 }
                                             }
                                         }
                                     }
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -323,8 +270,6 @@ public class TabuleiroController implements Initializable {
                 if (App.cont == 6 && App.vezJogador == 1) {
                     App.cont = -1;
                     App.vezJogador = 2;
-                    // tfJogador.clear();
-                    // tfJogador.appendText("2");
                 } else if (App.cont == 6 && App.vezJogador == 2) {
                     App.status = Status.ACAO;
                     App.vezJogador = 1;
@@ -337,7 +282,7 @@ public class TabuleiroController implements Initializable {
                 Stage stage;
 
                 if (App.cont == -1) {
-                    try { // limpando tabuleiros
+                    try { // Resetando tabuleiros
                         App.scene = new Scene(App.loadFXML("tabuleiro1"));
                         scene2 = new Scene(App.loadFXML("tabuleiro2"));
                         stage = (Stage) botaoClicado.getScene().getWindow();
@@ -354,17 +299,12 @@ public class TabuleiroController implements Initializable {
                         // Como aqui nesse momento o tabuleiro 2 está setado, estou modificando a sua
                         // label.
                         tfJogador.clear();
-                        tfJogador.setText("t2j1");
+                        tfJogador.setText("1");
 
-                        if (App.tabuleiro2.getPosicao(linha, coluna).isAtirado() /* && App.cont != 0 */) {
-                            Alert alert = new Alert(AlertType.WARNING);
-                            alert.initModality(Modality.WINDOW_MODAL);
-                            alert.setTitle("INVÁLIDO");
-                            alert.setHeaderText("Posição Inválida!");
-                            alert.setContentText("Por favor, tente novamente.");
-                            alert.showAndWait();
+                        if (App.tabuleiro2.getPosicao(linha, coluna).isAtirado() && App.cont != 0) {
+                            mensagemPosicaoInvalida();
                             App.cont--;
-                        } else if (!App.tabuleiro2.getPosicao(linha, coluna).isAtirado() /* && App.cont != 0 */) {
+                        } else if (!App.tabuleiro2.getPosicao(linha, coluna).isAtirado() && App.cont != 0) {
                             App.tabuleiro2.getPosicao(linha, coluna).setAtirado(true);
 
                             if (App.tabuleiro2.getPosicao(linha, coluna).isTemNavio()) { // Acertou
@@ -391,20 +331,18 @@ public class TabuleiroController implements Initializable {
                                     }
 
                                     if (ganhou) {
-                                        ganhar(App.vezJogador);
+                                        mensagemFimDeJogo(App.vezJogador);
                                     }
                                 }
-                            } else {
+                            } else { // Errou
                                 botaoClicado.setText("A");
-
                             }
 
+                            // Preparando para o jogador 2
                             stage = (Stage) botaoClicado.getScene().getWindow();
-
                             if (stage.getScene() != App.scene) {
                                 stage.setScene(App.scene);
                             }
-
                             App.vezJogador = 2;
                         }
 
@@ -413,15 +351,10 @@ public class TabuleiroController implements Initializable {
                         // Como aqui nesse momento o tabuleiro 1 está setado, estou modificando a sua
                         // label.
                         tfJogador.clear();
-                        tfJogador.setText("t1j2");
+                        tfJogador.setText("2");
 
                         if (App.tabuleiro1.getPosicao(linha, coluna).isAtirado()) {
-                            Alert alert = new Alert(AlertType.WARNING);
-                            alert.initModality(Modality.WINDOW_MODAL);
-                            alert.setTitle("INVÁLIDO");
-                            alert.setHeaderText("Posição Inválida!");
-                            alert.setContentText("Por favor, tente novamente.");
-                            alert.showAndWait();
+                            mensagemPosicaoInvalida();
                         } else if (!App.tabuleiro1.getPosicao(linha, coluna).isAtirado()) {
                             App.tabuleiro1.getPosicao(linha, coluna).setAtirado(true);
 
@@ -448,22 +381,20 @@ public class TabuleiroController implements Initializable {
                                     }
 
                                     if (ganhou) {
-                                        ganhar(App.vezJogador);
+                                        mensagemFimDeJogo(App.vezJogador);
                                     }
                                 }
                             } else {
                                 botaoClicado.setText("A");
                             }
 
+                            // Preparando para o jogador 1
                             stage = (Stage) botaoClicado.getScene().getWindow();
-
                             if (stage.getScene() != scene2) {
                                 stage.setScene(scene2);
                             }
-
                             App.vezJogador = 1;
                         }
-
                     }
                 }
 
@@ -471,7 +402,7 @@ public class TabuleiroController implements Initializable {
             }
         }
 
-        private void ganhar(int vencedor) {
+        private void mensagemFimDeJogo(int vencedor) {
             System.out.println("O jogador " + vencedor + " ganhou a partida!");
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.initModality(Modality.WINDOW_MODAL);
@@ -481,6 +412,15 @@ public class TabuleiroController implements Initializable {
             alert.showAndWait();
 
             Platform.exit();
+        }
+
+        private void mensagemPosicaoInvalida() {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initModality(Modality.WINDOW_MODAL);
+            alert.setTitle("INVÁLIDO");
+            alert.setHeaderText("Posição Inválida!");
+            alert.setContentText("Por favor, tente novamente.");
+            alert.showAndWait();
         }
     }
 }
