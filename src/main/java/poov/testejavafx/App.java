@@ -15,7 +15,6 @@ import poov.testejavafx.model.Tabuleiro;
 public class App extends Application {
 
     public static Scene scene;
-
     public static Tabuleiro tabuleiro1;
     public static Tabuleiro tabuleiro2;
     public static ArrayList<Navio> navios1;
@@ -26,7 +25,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        status = Status.INICIALIZACAO;
         inicializacao();
 
         status = Status.POSICIONAMENTO;
@@ -84,5 +82,4 @@ public class App extends Application {
         navio = new Navio(2);
         navios2.add(navio);
     }
-
 }

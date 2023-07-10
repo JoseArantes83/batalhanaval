@@ -2,6 +2,7 @@ package poov.testejavafx.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -16,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -23,7 +25,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import poov.testejavafx.App;
+import poov.testejavafx.model.Navio;
+import poov.testejavafx.model.Posicao;
 import poov.testejavafx.model.Status;
+import poov.testejavafx.model.Tabuleiro;
 
 public class TabuleiroController implements Initializable {
 
@@ -42,9 +47,6 @@ public class TabuleiroController implements Initializable {
     @FXML
     private ToggleGroup tgDisposicao;
 
-    public static int linIni;
-    public static int colIni;
-    public static int aux;
     public static Scene scene2;
 
     @Override
@@ -126,7 +128,6 @@ public class TabuleiroController implements Initializable {
                                     }
                                 }
                             }
-
                         }
                     } else {
                         if ((coluna + App.navios1.get(App.cont).getTamanho()) > 10) {
@@ -301,10 +302,10 @@ public class TabuleiroController implements Initializable {
                         tfJogador.clear();
                         tfJogador.setText("1");
 
-                        if (App.tabuleiro2.getPosicao(linha, coluna).isAtirado() && App.cont != 0) {
+                        if (App.tabuleiro2.getPosicao(linha, coluna).isAtirado()) {
                             mensagemPosicaoInvalida();
                             App.cont--;
-                        } else if (!App.tabuleiro2.getPosicao(linha, coluna).isAtirado() && App.cont != 0) {
+                        } else if (!App.tabuleiro2.getPosicao(linha, coluna).isAtirado()) {
                             App.tabuleiro2.getPosicao(linha, coluna).setAtirado(true);
 
                             if (App.tabuleiro2.getPosicao(linha, coluna).isTemNavio()) { // Acertou
@@ -323,6 +324,32 @@ public class TabuleiroController implements Initializable {
                                 if (afundou) {
                                     App.tabuleiro2.getPosicao(linha, coluna).getNavio().setAfundado(true);
 
+                                    for (int i = 0; i < App.tabuleiro2.getPosicao(linha, coluna).getNavio()
+                                            .getTamanho(); i++) {
+                                        Button botaoAMudar;
+                                        Posicao pos = App.tabuleiro2.getPosicao(linha, coluna).getNavio().getPosicoes()
+                                                .get(i);
+
+                                        for (Node node : grid.getChildren()) {
+                                            if (GridPane.getRowIndex(node) == pos.getLinha()
+                                                    && GridPane.getColumnIndex(node) == pos.getColuna()) {
+                                                if (node instanceof Button) {
+                                                    botaoAMudar = (Button) node;
+                                                    if (App.tabuleiro2.getPosicao(linha, coluna).getNavio()
+                                                            .getTamanho() == 5) {
+                                                        botaoAMudar.setText("P");
+                                                    } else if (App.tabuleiro2.getPosicao(linha, coluna).getNavio()
+                                                            .getTamanho() == 4) {
+                                                        botaoAMudar.setText("C");
+                                                    } else {
+                                                        botaoAMudar.setText("S");
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+
                                     ganhou = true;
                                     for (int i = 0; i < App.navios2.size(); i++) {
                                         if (!App.navios2.get(i).isAfundado()) {
@@ -331,7 +358,7 @@ public class TabuleiroController implements Initializable {
                                     }
 
                                     if (ganhou) {
-                                        mensagemFimDeJogo(App.vezJogador);
+                                        mensagemFimDeJogo(App.vezJogador, botaoClicado);
                                     }
                                 }
                             } else { // Errou
@@ -344,6 +371,13 @@ public class TabuleiroController implements Initializable {
                                 stage.setScene(App.scene);
                             }
                             App.vezJogador = 2;
+
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
                         }
 
                     } else if (App.vezJogador == 2) {
@@ -373,6 +407,32 @@ public class TabuleiroController implements Initializable {
                                 if (afundou) {
                                     App.tabuleiro1.getPosicao(linha, coluna).getNavio().setAfundado(true);
 
+                                    for (int i = 0; i < App.tabuleiro1.getPosicao(linha, coluna).getNavio()
+                                            .getTamanho(); i++) {
+                                        Button botaoAMudar;
+                                        Posicao pos = App.tabuleiro1.getPosicao(linha, coluna).getNavio().getPosicoes()
+                                                .get(i);
+
+                                        for (Node node : grid.getChildren()) {
+                                            if (GridPane.getRowIndex(node) == pos.getLinha()
+                                                    && GridPane.getColumnIndex(node) == pos.getColuna()) {
+                                                if (node instanceof Button) {
+                                                    botaoAMudar = (Button) node;
+                                                    if (App.tabuleiro1.getPosicao(linha, coluna).getNavio()
+                                                            .getTamanho() == 5) {
+                                                        botaoAMudar.setText("P");
+                                                    } else if (App.tabuleiro1.getPosicao(linha, coluna).getNavio()
+                                                            .getTamanho() == 4) {
+                                                        botaoAMudar.setText("C");
+                                                    } else {
+                                                        botaoAMudar.setText("S");
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+
                                     ganhou = true;
                                     for (int i = 0; i < App.navios1.size(); i++) {
                                         if (!App.navios1.get(i).isAfundado()) {
@@ -381,19 +441,25 @@ public class TabuleiroController implements Initializable {
                                     }
 
                                     if (ganhou) {
-                                        mensagemFimDeJogo(App.vezJogador);
+                                        mensagemFimDeJogo(App.vezJogador, botaoClicado);
                                     }
                                 }
                             } else {
                                 botaoClicado.setText("A");
                             }
-
                             // Preparando para o jogador 1
                             stage = (Stage) botaoClicado.getScene().getWindow();
                             if (stage.getScene() != scene2) {
                                 stage.setScene(scene2);
                             }
                             App.vezJogador = 1;
+
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     }
                 }
@@ -402,7 +468,7 @@ public class TabuleiroController implements Initializable {
             }
         }
 
-        private void mensagemFimDeJogo(int vencedor) {
+        private void mensagemFimDeJogo(int vencedor, Button botaoClicado) {
             System.out.println("O jogador " + vencedor + " ganhou a partida!");
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.initModality(Modality.WINDOW_MODAL);
@@ -411,7 +477,67 @@ public class TabuleiroController implements Initializable {
             alert.setContentText("O jogador " + vencedor + " venceu a partida!");
             alert.showAndWait();
 
-            Platform.exit();
+            // Analisar se a pessoa quer jogar de novo
+            Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+            alert2.setTitle("JOGAR NOVAMENTE");
+            alert2.setHeaderText("Deseja jogar novamente?");
+
+            ButtonType sim = new ButtonType("Sim");
+            ButtonType nao = new ButtonType("Não");
+
+            alert2.getButtonTypes().setAll(sim, nao);
+
+            alert2.showAndWait().ifPresent(response -> {
+                if (response == sim) {
+                    try {
+                        App.scene = new Scene(App.loadFXML("tabuleiro1"));
+                        scene2 = new Scene(App.loadFXML("tabuleiro2"));
+
+                        Stage stage = (Stage) botaoClicado.getScene().getWindow();
+                        stage.setScene(scene2);
+
+                        App.tabuleiro1 = new Tabuleiro(1);
+                        App.tabuleiro2 = new Tabuleiro(2);
+
+                        App.navios1 = new ArrayList<>();
+
+                        Navio navio = new Navio(5);
+                        App.navios1.add(navio);
+                        navio = new Navio(4);
+                        App.navios1.add(navio);
+                        navio = new Navio(4);
+                        App.navios1.add(navio);
+                        navio = new Navio(2);
+                        App.navios1.add(navio);
+                        navio = new Navio(2);
+                        App.navios1.add(navio);
+                        navio = new Navio(2);
+                        App.navios1.add(navio);
+
+                        App.navios2 = new ArrayList<>();
+                        navio = new Navio(5);
+                        App.navios2.add(navio);
+                        navio = new Navio(4);
+                        App.navios2.add(navio);
+                        navio = new Navio(4);
+                        App.navios2.add(navio);
+                        navio = new Navio(2);
+                        App.navios2.add(navio);
+                        navio = new Navio(2);
+                        App.navios2.add(navio);
+                        navio = new Navio(2);
+                        App.navios2.add(navio);
+
+                        App.vezJogador = 1;
+                        App.cont = 0;
+                        App.status = Status.POSICIONAMENTO;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (response == nao) {
+                    Platform.exit();
+                }
+            });
         }
 
         private void mensagemPosicaoInvalida() {

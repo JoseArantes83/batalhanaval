@@ -51,6 +51,6 @@
       </RadioButton>
       <RadioButton fx:id="rbVertical" layoutX="333.0" layoutY="69.0" mnemonicParsing="false" text="Vertical" toggleGroup="$tgDisposicao" />
       <Label layoutX="479.0" layoutY="69.0" text="Vez do jogador:" />
-      <TextField fx:id="tfJogador" editable="false" layoutX="574.0" layoutY="65.0" prefHeight="25.0" prefWidth="50.0" text="2" />
+      <TextField fx:id="tfJogador" editable="false" layoutX="574.0" layoutY="65.0" prefHeight="27.0" prefWidth="24.0" text="2" />
    </children>
 </AnchorPane>
